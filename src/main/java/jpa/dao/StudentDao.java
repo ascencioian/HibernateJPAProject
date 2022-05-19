@@ -1,10 +1,14 @@
 package jpa.dao;
 
+import java.util.List;
+
+import jpa.entitymodels.Student;
+
 public interface StudentDao {
 	
-	void getAllStudents();
+	List<Student> getAllStudents();
 
-	void getStudentByEmail();
+	Student getStudentByEmail(String studentEmail);
 
 	void validateStudent();
 
