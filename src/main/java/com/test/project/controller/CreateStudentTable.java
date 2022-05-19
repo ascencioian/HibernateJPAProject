@@ -28,4 +28,4 @@ public class CreateStudentTable {
 
 
 
-///Create User table using hibernaewadsqxSCFSDXZFCDSB9Y78P6 IUOYTUHACSDULHJGKUHGFYFGRTTYGFGYte.
+///Create User table using hibernate.

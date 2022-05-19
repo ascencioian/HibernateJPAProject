@@ -22,11 +22,11 @@ public class Course implements Serializable {
 	
 	//class variables
 	@Id
-	@Column(name = "Course_Id")
+	@Column(name = "Course_Id", nullable = false)
 	private int cId;
-	@Column(name = "Course_Name")
+	@Column(name = "Course_Name", nullable = false)
 	private String cName;
-	@Column(name = "Course_Instructor")
+	@Column(name = "Course_Instructor", nullable = false)
 	private String cInstructorName;
 	
 	public Course(int cId, String cName, String cInstructorName) {

@@ -25,3 +25,6 @@ public class CreateCourseTable {
        session.close();
    }
 }
+
+
+///Create course table using hibernate.
