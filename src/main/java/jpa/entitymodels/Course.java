@@ -29,9 +29,6 @@ public class Course implements Serializable {
 	@Column(name = "Course_Instructor")
 	private String cInstructorName;
 	
-	@ManyToMany(targetEntity=Student.class, cascade = {CascadeType.ALL})
-	private List courseList;
-	
 	public Course(int cId, String cName, String cInstructorName) {
 		this.cId = cId;
 		this.cName = cName;
