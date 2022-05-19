@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC  
+        "-//Hibernate/Hibernate Configuration DTD 5.3//EN"  
+        "http://www.hibernate.org/dtd/hibernate-configuration-5.3.dtd">  
+<hibernate-configuration>  
+    <session-factory>  
+    <!-- Drop and re-create the database schema on startup -->
+    <property name="hibernate.hbm2ddl.auto"> update </property>   
+    <!-- Database connection settings -->
+<property name="connection.driver_class">org.mariadb.jdbc.Driver</property>   
+<property name="connection.url">jdbc:mysql://localhost:3306/sms</property>
+<property name="connection.username">root</property>
+<property name="connection.password">password</property>
+    <!-- Maria DB dialect -->
+<property name="dialect">org.hibernate.dialect.MariaDB53Dialect</property>
+  <!-- Echo all executed SQL to stdout -->
+   <property name="hibernate.show_sql" >true </property>
+   <property name="hibernate.format_sql" >true </property>
+
+   <!--   Mapping entity file -->
+   <mapping class="jpa.entitymodels.Student"/> 
+   <mapping class="jpa.entitymodels.Course"/> 
+   
+    </session-factory>  
+</hibernate-configuration>  
+
+
+<!-- this configuration is a class
+the first hibernate object 
+it activates the hibernate framework
+reads both configuration files and mapping files
+it provides 2 key components database connection from the cfg file
+ and class mapping setup creates connection between java classes and database tables
+Configuration cfg = new Configuration();  //This line activate Hibernate Framework
+cfg.configure(); // read both cfg file and mapping files
+ -->
+ 
+ <!--  session factory-- 
+ session factory is an interface which is present in org.hibernate package
+ configuration object is used to create a sessionFactory object
+ need one sessionFactory object per database using a separate configuration file
+ if using multiple databases use multiple session factor objects
+ SessionFactory is responsible for creating sessions
+  -->
+  
+  <!-- Save---
+  a session is used to get a physical connection to the database
+  session is an interface which is present in the org.hibernnate package
+  a session is designed to be instantiated each time an interactione with database is needed
+  session is not thread safe and should be created and destroyed as needed.
+  session object is used for CRUD of instances of mapped entity classes
+  three states available for entity classes: transient, persistnet, detatched
+  transient: never persistent, not associated with any Session
+  persistent: associated with a unique session
+  Detached: previously persistent, not associated with any session
+  Session session=factory.buildSession();
+  session.save() saves transient entity. generates an identifier and inserts record when commited
+  can use save(Object object) or save(String entityName, Object object)
+   -->
+   
+   <!-- Regarding Update--
+   Update() updates entity for persistence, using the identifier of the detached object
+   or the new instance of entity created with existing identifier
+   if identifier already exists error thrown
+   if not, object updated is cascade is defined as save_update
+    -->
+    
+    <!-- transaction----
+    transaction can let you achieve data consistency and rollback by implementing ACID
+    A-Atomicity
+    C-consistency
+    I-Isolation
+    D-Durablility
+    
+    this is what transaction does:
+    1.void begin() starts a new transaction.
+	2.void commit() ends the unit of work unless we are in FlushMode.NEVER.
+	3.void rollback() forces this transaction to rollback.
+	4.void setTimeout(int seconds) sets a transaction timeout for any transaction started by a subsequent call to begin on this instance.
+	5.boolean isAlive() checks if the transaction is still alive.
+	6.void registerSynchronization(Synchronization s) registers a user synchronization callback for this transaction.
+	7.boolean wasCommited() checks if the transaction is committed successfully.
+	8.boolean wasRolledBack() checks if the transaction is rolled back successfully.
+     -->
+     
+     <!-- entity-----
+     entity is a java object that is going to be persisted. Entity classes are decorated with 
+     java annotations such as @Entity, @id, @table, @column
+      entities are beans or models with contrustor, getter, setter, class variables
+      -->
+     
+     <!-- 
+     step 1: create java beans and controller methods
+     step 2: configure hibernate cfg (the mapping file)
+      -->
+      
+      <!-- Query----
+      Query is an interface that pressents inside the hibernate package
+      query called with Session.createQuery()
+      Query objects use SQL or HQL strings
+      is used to bind query parameters 
+      used to limit results
+      used to execute query.
+      Query query=session.createQuery();
+       -->
+     
+     <!-- HQL----
+     used to retrieve data from the database
+     HQL uses class name instead of table name, and property names instead of column names.
+     Keywords such as SELECT, FROM , WHERE are not case sensitive but properties such as table and column names are case sensitive
+     FROM
+     Join supports inner, left, outer, right, full
+     aggregate funcitons
+     expressions 
+     order by and group by
+     subqueries
+     DDL and DML
+     
+     Query Interface
+     supports TypedQuery,NamedQuery, and Criteria API
+     Query query=session.createQuery();
+     Query.getSingleResult - for use when exactly one result object is expected.
+	 Query.getResultList - for general use in any other case.
+	 
+	 or
+	 TypedQuery query = session.createQuery();
+     TypedQuery.getSingleResult() - for use when exactly one result object is expected.  returns a single untyped result.
+     
+	 TypedQuery.getResultList() - for general use in any other case.
+	 
+	 
+	 In addition, the Query interface defines a method for running DELETE and UPDATE queries:
+	Query.executeUpdate() - for running only DELETE and UPDATE queries.  returns the number of entities updated or deleted.
+	
+	
+	  General rule for the getResultList() is the following:
+	  If select contains single expression and its an entity, then the result is that entity.
+	  If select contains single expression and its a primitive, then the result is that primitive.
+	  If select contains multiple expressions, then the result is List<Object[]>  , containing the corresponding primitives/entities 
+      
+      //a parameterized query is like using ? in JDBC
+      setParameter(): Bind a value to a JDBC-style query parameter. The Hibernate type of the parameter is first detected via the usage/position in the query, and if not sufficient, secondly guessed from the class of the given object.
+      setMaxResults(): Set the maximum number of rows to retrieve. If not set, there is no limit to the number of rows retrieved.
+      -->
+     
+     
+     <!-- named queries---
+     Hibernate provides NamedQuery
+     defined at a location to use anywhere
+     it is like using alias names
+     useful to not scatter queries to all the java code
+     can be used for both HQL and SQL
+     a named query is predefined and should be unchangable query string
+     named queries are compliled when session factory is instantiated and validated. if failed to validate you  get a fauil
+     use @NamedQueries annotation and @namedQuery annotation
+     named query can be defined in mapping file or using Hibernate annotations
+     
+     2 attrinubtes: name and query
+     
+      -->
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
