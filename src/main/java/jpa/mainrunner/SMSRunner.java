@@ -17,6 +17,7 @@ import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 
 import jpa.dao.StudentDao;
+import jpa.entitymodels.Course;
 //class imports 
 import jpa.entitymodels.Student;
 import jpa.service.StudentService;
@@ -31,35 +32,26 @@ public class SMSRunner {
 
 	public static void main(String[] args) {
 		
-		String studentEmail = "aiannitti7@is.gd" ;
-		String studentPassword = "TWP4hf5j";
+		
 			// TODO Auto-generated method stub
-			//Only students with the right credentials can log in. Otherwise, a message is displayed stating: “Wrong Credentials”. 
-			//Valid students are able to see the courses they are registered for.
-			//Valid students are able to register for any course in the system as long as they are not already registered.
-			SessionFactory factory = new Configuration().configure().buildSessionFactory();
-			Session session = factory.openSession();
-			
-			Transaction tx = session.beginTransaction();
-			
-			//Create Employee object using session.get()
-	        Student student = (Student) session.get(Student.class,new String(studentEmail));
-			
-	        System.out.println("*** Employee Details ***");
-	        System.out.println("email   : "+student.getsEmail());
-	        System.out.println("Name : "+student.getsName());
-	        System.out.println("pass  : "+student.getsPass());
-	        
-	        String validPassword = student.getsPass();
-	        
-	        System.out.println(validPassword);
-	        
-	        if(studentPassword.equalsIgnoreCase(validPassword)) {
-	        	System.out.println("valid user");
-	        }else {
-	        	System.out.println("Wrong Credentials");
-	        }
-	        
+		SessionFactory factory = new Configuration().configure().buildSessionFactory();
+	    Session session = factory.openSession();
+	    
+	    TypedQuery query = session.getNamedQuery("Select_All_Courses");
+	    
+	    List<Course> courses = query.getResultList();
+	    
+	    
+	    for(Course o: courses)
+		{
+System.out.println("Course Id: " + o.getcId() +" | Course instructor : "+ o.getcInstructorName()+" | course name: "+ o.getcName());
+         }
+   
+	    
+	    factory.close();  
+		session.close();
+	
+	
 			//how are you going to validate a student?
 			//i am going to be provided a student password
 			//i need to grab from the database my student
