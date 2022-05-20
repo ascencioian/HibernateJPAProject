@@ -42,10 +42,7 @@ public class SMSRunner {
 	    List<Course> courses = query.getResultList();
 	    
 	    
-	    for(Course o: courses)
-		{
-System.out.println("Course Id: " + o.getcId() +" | Course instructor : "+ o.getcInstructorName()+" | course name: "+ o.getcName());
-         }
+	   
    
 	    
 	    factory.close();  
