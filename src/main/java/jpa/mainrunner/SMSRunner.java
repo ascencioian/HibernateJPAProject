@@ -18,7 +18,7 @@ import org.hibernate.cfg.Configuration;
 
 import jpa.dao.StudentDao;
 import jpa.entitymodels.Course;
-//class imports 
+import jpa.entitymodels.RegisteredCourses;
 import jpa.entitymodels.Student;
 import jpa.service.StudentService;
 
@@ -33,37 +33,6 @@ public class SMSRunner {
 	public static void main(String[] args) {
 		
 		
-			// TODO Auto-generated method stub
-		SessionFactory factory = new Configuration().configure().buildSessionFactory();
-	    Session session = factory.openSession();
-	    
-	    TypedQuery query = session.getNamedQuery("Select_All_Courses");
-	    
-	    List<Course> courses = query.getResultList();
-	    
-	    
-	   
-   
-	    
-	    factory.close();  
-		session.close();
-	
-	
-			//how are you going to validate a student?
-			//i am going to be provided a student password
-			//i need to grab from the database my student
-			//i need to save the password attribute to a local variable
-			//i need to run a comparison between the input and the local variable,
-			//return true if correct
-			//return an error message if false
-			
-		
-	     
-		
-		// TODO Auto-generated method stub
-	
-		
-		
 		/*test zone
 		 * 
 		 * 
@@ -76,15 +45,39 @@ public class SMSRunner {
 		
 		
 
+			SessionFactory factory = new Configuration().configure().buildSessionFactory();
+			Session session = factory.openSession();
+			
+			TypedQuery query = session.getNamedQuery("Select_All_Courses");
+			
+			 List<RegisteredCourses> registeredCourses = query.getResultList();
+			 
+			 System.out.println("this far");
+			 System.out.println(registeredCourses);  //this works
+			   Iterator<RegisteredCourses> itr = registeredCourses.iterator(); 
+		          for (RegisteredCourses u : registeredCourses) {
+			    	 System.out.println("courseID: " +u.getsCourses_Course_Id() + "|" + " email:" + u.getStudent_Student_Email() +"|");
+			      } 
+		         
+		         
+			 
+			   factory.close();  
+			   session.close(); 
+			   
+		
+	   /*
+		 * 
+		 * 
+		 * 
+		 * 
+		 * 
+		 * 
+		 * test zone
+		 */
+	
+		
+
 	}
 	
-	
-	//display menu
-	public static void menu() {
-		System.out.println("Are you a(n)");
-		System.out.println("1. Student");
-		System.out.println("2. quit");
-		System.out.println("Please enter 1 or 2.");
-	}
 
 }

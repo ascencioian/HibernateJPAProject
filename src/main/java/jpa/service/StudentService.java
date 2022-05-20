@@ -17,6 +17,7 @@ import org.hibernate.cfg.Configuration;
 
 import jpa.dao.StudentDao;
 import jpa.entitymodels.Course;
+import jpa.entitymodels.RegisteredCourses;
 import jpa.entitymodels.Student;
 
 
@@ -131,8 +132,27 @@ public class StudentService implements StudentDao {
 	//If the Student is not attending that Course, register the student for that course; otherwise not.
 	public void registerStudentToCourse(String studentEmail, int courseId) {
 		// TODO Auto-generated method stub
+		SessionFactory factory = new Configuration().configure().buildSessionFactory();
+		Session session = factory.openSession();
 		
+		TypedQuery query = session.getNamedQuery("Select_All_Courses");
+		
+		 List<RegisteredCourses> registeredCourses = query.getResultList();
+		 
+		   Iterator<RegisteredCourses> itr = registeredCourses.iterator(); 
+	          for (RegisteredCourses u : registeredCourses) {
+		    	 System.out.println("Email: " +u.getsCourses_Course_Id() + "|" + " Full name:" + u.getStudent_Student_Email() +"|");
+		      } 
+	         
+	         
+		 
+		   factory.close();  
+		   session.close(); 
+		   
+		   
 	}
+	
+
 	//-----------------------------------------------------------------------------------------
 	public List<Course> getStudentCourses(String studentEmail) {
 		// TODO Auto-generated method stub

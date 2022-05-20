@@ -4,11 +4,15 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity
 @Table
+@NamedQueries({
+	@NamedQuery( name="Select_All_Courses", query="from student_course"),
+})
 public class RegisteredCourses implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
