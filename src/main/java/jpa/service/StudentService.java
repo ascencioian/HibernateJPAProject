@@ -104,6 +104,11 @@ public class StudentService implements StudentDao {
         String validPassword = student.getsPass();
         
         if(studentPassword.equalsIgnoreCase(validPassword)) {
+        	
+        	//need to add try catch blocks to close resources
+        	factory.close();
+      	    session.close();
+      	    
         	return true;
         }else {
         	System.out.println("Wrong Credentials");
@@ -126,9 +131,27 @@ public class StudentService implements StudentDao {
 		
 	}
 
-	public void getStudentCourses() {
+	public List<Course> getStudentCourses(String studentEmail) {
 		// TODO Auto-generated method stub
+		SessionFactory factory = new Configuration().configure().buildSessionFactory();
+		Session session = factory.openSession();
 		
+		Transaction tx = session.beginTransaction();
+		
+		//Create Employee object using session.get()
+        Student student = (Student) session.get(Student.class,new String(studentEmail));
+        
+        List <Course> studentClassList = student.getsCourses();		
+        
+		//how are you going to get student courses of a student?
+		//being provided an email
+		//generate that object from database
+		// return its course attribute
+        
+        factory.close();
+	    session.close();
+        
+		return studentClassList;
 	}
 
 }
