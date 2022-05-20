@@ -29,9 +29,9 @@ public class Course implements Serializable {
 	@Id
 	@Column(name = "Course_Id", nullable = false)
 	private int cId;
-	@Column(name = "Course_Name", nullable = false)
+	@Column(name = "Course_Name", nullable = false, length = 50)
 	private String cName;
-	@Column(name = "Course_Instructor", nullable = false)
+	@Column(name = "Course_Instructor", nullable = false, length = 50)
 	private String cInstructorName;
 	
 	public Course(int cId, String cName, String cInstructorName) {

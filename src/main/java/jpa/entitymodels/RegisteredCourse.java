@@ -11,9 +11,9 @@ import javax.persistence.Table;
 @Entity
 @Table
 @NamedQueries({
-	@NamedQuery( name="Select_All_Courses", query="from student_course"),
+	@NamedQuery( name="Select_Registered_Courses_by_Student", query="Select c from RegisteredCourse c where c.Student_Student_Email = :email"),
 })
-public class RegisteredCourses implements Serializable {
+public class RegisteredCourse implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	//class variables
@@ -22,15 +22,15 @@ public class RegisteredCourses implements Serializable {
 	private String Student_Student_Email;
 	@Id
 	@Column(name = "sCourses_Course_Id", nullable = false)
-	private String sCourses_Course_Id;
+	private int sCourses_Course_Id;
 	
-	public RegisteredCourses(String student_Student_Email, String sCourses_Course_Id) {
+	public RegisteredCourse(String student_Student_Email, Integer sCourses_Course_Id) {
 		this.Student_Student_Email = student_Student_Email;
 		this.sCourses_Course_Id = sCourses_Course_Id;
 	}
 	
 	//default constructor
-	public RegisteredCourses() {}
+	public RegisteredCourse() {}
 
 	//Getters Setters
 	public String getStudent_Student_Email() {
@@ -41,11 +41,11 @@ public class RegisteredCourses implements Serializable {
 		Student_Student_Email = student_Student_Email;
 	}
 
-	public String getsCourses_Course_Id() {
+	public Integer getsCourses_Course_Id() {
 		return sCourses_Course_Id;
 	}
 
-	public void setsCourses_Course_Id(String sCourses_Course_Id) {
+	public void setsCourses_Course_Id(Integer sCourses_Course_Id) {
 		this.sCourses_Course_Id = sCourses_Course_Id;
 	}
 

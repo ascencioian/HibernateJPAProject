@@ -1,83 +1,138 @@
+/*
+ * Filename: SMSRunner.java
+* Author: Stefanski
+* 02/25/2020 
+ */
 package jpa.mainrunner;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Iterator;
+import static java.lang.System.out;
+
 import java.util.List;
 import java.util.Scanner;
 
-import javax.persistence.TypedQuery;
-
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-import org.hibernate.cfg.Configuration;
-
-import jpa.dao.StudentDao;
 import jpa.entitymodels.Course;
-import jpa.entitymodels.RegisteredCourses;
 import jpa.entitymodels.Student;
+import jpa.service.CourseService;
+import jpa.service.StudentCourseService;
 import jpa.service.StudentService;
 
+/**1
+ * 
+ * @author Harry
+ *
+ */
 public class SMSRunner {
-	
-	public static Scanner reader = new Scanner(System.in);
-	
-	
 
+	private Scanner sin;
+	private StringBuilder sb;
 
+	private CourseService courseService;
+	private StudentService studentService;
+	private Student currentStudent;
 
-	public static void main(String[] args) {
-		
-		
-		/*test zone
-		 * 
-		 * 
-		 * 
-		 * 
-		 * 
-		 * 
-		 * 
-		 */
-		
-		
-
-			SessionFactory factory = new Configuration().configure().buildSessionFactory();
-			Session session = factory.openSession();
-			
-			TypedQuery query = session.getNamedQuery("Select_All_Courses");
-			
-			 List<RegisteredCourses> registeredCourses = query.getResultList();
-			 
-			 System.out.println("this far");
-			 System.out.println(registeredCourses);  //this works
-			   Iterator<RegisteredCourses> itr = registeredCourses.iterator(); 
-		          for (RegisteredCourses u : registeredCourses) {
-			    	 System.out.println("courseID: " +u.getsCourses_Course_Id() + "|" + " email:" + u.getStudent_Student_Email() +"|");
-			      } 
-		         
-		         
-			 
-			   factory.close();  
-			   session.close(); 
-			   
-		
-	   /*
-		 * 
-		 * 
-		 * 
-		 * 
-		 * 
-		 * 
-		 * test zone
-		 */
-	
-		
-
+	public SMSRunner() {
+		sin = new Scanner(System.in);
+		sb = new StringBuilder();
+		courseService = new CourseService();
+		studentService = new StudentService();
 	}
-	
 
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+
+		SMSRunner sms = new SMSRunner();
+		sms.run();
+	}
+
+	private void run() {
+		// Login or quit
+		switch (menu1()) {
+		case 1:
+			if (studentLogin()) {
+				registerMenu();
+			}
+			break;
+		case 2:
+			out.println("Goodbye!");
+			break;
+
+		default:
+
+		}
+	}
+
+	private int menu1() {
+		sb.append("\n1.Student Login\n2. Quit Application\nPlease Enter Selection: ");
+		out.print(sb.toString());
+		sb.delete(0, sb.length());
+
+		return sin.nextInt();
+	}
+
+	private boolean studentLogin() {
+		boolean retValue = false;
+		out.print("Enter your email address: ");
+		String email = sin.next();
+		out.print("Enter your password: ");
+		String password = sin.next();
+		System.out.println("this far01");
+		Student student = studentService.getStudentByEmail(email);
+		if (student != null) {
+			currentStudent = student;
+			System.out.println("this far1");
+		}
+
+		if (currentStudent != null & currentStudent.getStudentPassword().equals(password)) {
+			List<Course> courses = studentService.getStudentCourses(email);
+			out.println("MyClasses");
+			for (Course course : courses) {
+				out.println(course);
+			}
+			retValue = true;
+		} else {
+			out.println("User Validation failed. GoodBye!");
+		}
+		return retValue;
+	}
+
+	private void registerMenu() {
+		sb.append("\n1.Register a class\n2. Logout\nPlease Enter Selection: ");
+		out.print(sb.toString());
+		sb.delete(0, sb.length());
+
+		switch (sin.nextInt()) {
+		case 1:
+			List<Course> allCourses = courseService.getAllCourses();
+			List<Course> studentCourses = studentService.getStudentCourses(currentStudent.getStudentEmail());
+			allCourses.removeAll(studentCourses);
+			out.printf("%5s%15S%15s\n", "ID", "Course", "Instructor");
+			for (Course course : allCourses) {
+				out.println(course);
+			}
+			out.println();
+			out.print("Enter Course Number: ");
+			int number = sin.nextInt();
+			Course newCourse = courseService.GetCourseById(number).get(0);
+
+			if (newCourse != null) {
+				studentService.registerStudentToCourse(currentStudent.getStudentEmail(), newCourse);
+				Student temp = studentService.getStudentByEmail(currentStudent.getStudentEmail()).get(0);
+				
+				StudentCourseService scService = new StudentCourseService();
+				List<Course> sCourses = scService.getAllStudentCourses(temp.getStudentEmail());
+				
+
+				out.println("MyClasses");
+				for (Course course : sCourses) {
+					out.println(course);
+				}
+			}
+			break;
+		case 2:
+		default:
+			out.println("Goodbye!");
+		}
+	}
 }

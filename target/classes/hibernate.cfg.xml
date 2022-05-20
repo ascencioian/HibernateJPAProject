@@ -20,6 +20,7 @@
    <!--   Mapping entity file -->
    <mapping class="jpa.entitymodels.Student"/> 
    <mapping class="jpa.entitymodels.Course"/> 
+    <mapping class="jpa.entitymodels.RegisteredCourse"/> 
    
     </session-factory>  
 </hibernate-configuration>  

@@ -28,11 +28,11 @@ public class Student implements Serializable{
 	
 	//class variables
 	@Id
-	@Column(name = "Student_Email", nullable = false)
+	@Column(name = "Student_Email", nullable = false, length = 50)
 	private String sEmail;
-	@Column(name = "student_FullName", nullable = false)
+	@Column(name = "student_FullName", nullable = false, length = 50)
 	private String sName;
-	@Column(name = "student_password", nullable = false)
+	@Column(name = "student_password", nullable = false, length = 50)
 	private String sPass;
 	
 	//relationship

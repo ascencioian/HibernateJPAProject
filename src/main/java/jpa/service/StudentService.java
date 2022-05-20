@@ -17,7 +17,7 @@ import org.hibernate.cfg.Configuration;
 
 import jpa.dao.StudentDao;
 import jpa.entitymodels.Course;
-import jpa.entitymodels.RegisteredCourses;
+import jpa.entitymodels.RegisteredCourse;
 import jpa.entitymodels.Student;
 
 
@@ -31,7 +31,7 @@ public class StudentService implements StudentDao {
 		SessionFactory factory = new Configuration().configure().buildSessionFactory();
 	    Session session = factory.openSession();
 	    
-		TypedQuery query = session.getNamedQuery("Select_All_Students");    
+		TypedQuery query = session.getNamedQuery("Select_All_Courses");    
      
         List<Student> students = query.getResultList();   
           
@@ -132,16 +132,50 @@ public class StudentService implements StudentDao {
 	//If the Student is not attending that Course, register the student for that course; otherwise not.
 	public void registerStudentToCourse(String studentEmail, int courseId) {
 		// TODO Auto-generated method stub
+		
+		//check if student is registered to a course
 		SessionFactory factory = new Configuration().configure().buildSessionFactory();
 		Session session = factory.openSession();
 		
-		TypedQuery query = session.getNamedQuery("Select_All_Courses");
+		TypedQuery query = session.getNamedQuery("Select_Registered_Courses_by_Student");
+		query.setParameter("email", studentEmail); 
 		
-		 List<RegisteredCourses> registeredCourses = query.getResultList();
+		 List<RegisteredCourse> registeredCourses = query.getResultList();
 		 
-		   Iterator<RegisteredCourses> itr = registeredCourses.iterator(); 
-	          for (RegisteredCourses u : registeredCourses) {
+		 //testing
+		 /*
+		   Iterator<RegisteredCourse> itr = registeredCourses.iterator(); 
+	          for (RegisteredCourse u : registeredCourses) {
 		    	 System.out.println("Email: " +u.getsCourses_Course_Id() + "|" + " Full name:" + u.getStudent_Student_Email() +"|");
+		      } 
+	         
+		  */
+		 
+		   Iterator<RegisteredCourse> itr = registeredCourses.iterator(); 
+	          for (RegisteredCourse u : registeredCourses) {
+	        	  int id = u.getsCourses_Course_Id();
+	        	   
+	        	  if(id ==courseId) {
+	        		  System.out.println("course already being taken");
+	        		  break;
+	        	  }
+	        	  
+	        	//Create student object using session.get()
+	              Student student = (Student) session.get(Student.class,new String(studentEmail));
+	              //create course list
+	        	  List<Course> coursesBeingTaken = student.getsCourses();
+	        
+	        	  
+	        	//create the course object  
+	        	  Course course = (Course) session.get(Course.class,new Integer(courseId));
+	        	  
+	        	//insert the course object 
+	        	  coursesBeingTaken.add(course);
+	        	  
+	        	 //set attribute
+	        	  student.setsCourses(coursesBeingTaken);
+	        	  
+		    	
 		      } 
 	         
 	         
