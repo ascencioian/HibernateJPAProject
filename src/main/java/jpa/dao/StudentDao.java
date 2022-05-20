@@ -10,7 +10,7 @@ public interface StudentDao {
 
 	Student getStudentByEmail(String studentEmail);
 
-	void validateStudent();
+	boolean validateStudent(String studentEmail, String studentPassword);
 
 	void registerStudentToCourse();
 

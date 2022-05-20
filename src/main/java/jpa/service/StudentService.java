@@ -86,32 +86,40 @@ public class StudentService implements StudentDao {
 		return student;
 	}
 	
-	//named query
-	public void findEmployeeById(){
-			 
-		SessionFactory factory = new Configuration().configure().buildSessionFactory();
-		Session session = factory.openSession();
-
-		       
-        TypedQuery query = session.getNamedQuery("get_Emp_name_by_id");    
-        query.setParameter("id",3);   
-		 List<Object[]> emName=  query.getResultList();
-		for(Object[] o: emName)
-				{
-		System.out.println("Employee name: " +o[0] +" | Employee Salary: "+ o[1] +" | Emp Job Title: "+ o[2]);
-		         }
-			factory.close();  
-		     session.close();    
-	}
-	
-
-	public void validateStudent() {
+	//---------------------------------Validate Credentials--------------------
+	//This method takes two parameters: the first one is the user email and the second one is the password from the user input. Return whether or not a student was found.
+	public boolean validateStudent(String studentEmail, String studentPassword) {
 		// TODO Auto-generated method stub
 		//Only students with the right credentials can log in. Otherwise, a message is displayed stating: “Wrong Credentials”. 
 		//Valid students are able to see the courses they are registered for.
 		//Valid students are able to register for any course in the system as long as they are not already registered.
+		SessionFactory factory = new Configuration().configure().buildSessionFactory();
+		Session session = factory.openSession();
 		
+		Transaction tx = session.beginTransaction();
+		
+		//Create Employee object using session.get()
+        Student student = (Student) session.get(Student.class,new String(studentEmail));
+		
+        String validPassword = student.getsPass();
+        
+        if(studentPassword.equalsIgnoreCase(validPassword)) {
+        	return true;
+        }else {
+        	System.out.println("Wrong Credentials");
+        }
+        
+		//how are you going to validate a student?
+		//i am going to be provided a student password
+		//i need to grab from the database my student
+		//i need to save the password attribute to a local variable
+		//i need to run a comparison between the input and the local variable,
+		//return true if correct
+		//return an error message if false
+		
+		return false;
 	}
+	
 
 	public void registerStudentToCourse() {
 		// TODO Auto-generated method stub
