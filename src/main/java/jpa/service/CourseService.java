@@ -25,11 +25,11 @@ public class CourseService implements CourseDao {
 	    List<Course> courses = query.getResultList();
 	    
 	    //testing
-	    /*
+	   
 	    for(Course o: courses){
 	    	System.out.println("Course Id: " + o.getcId() +" | Course instructor : "+ o.getcInstructorName()+" | course name: "+ o.getcName());
          }
-	     * */
+	 
 	    
 	    factory.close();  
 		session.close();
@@ -43,6 +43,11 @@ public class CourseService implements CourseDao {
 	    Session session = factory.openSession();
 	    
 	    Course course = (Course) session.get(Course.class,new Integer(courseId));
+	    
+	    //testing
+	    System.out.println("***courseName***");
+	    System.out.println(course.getcName());
+	    
 		//get all courses
 		//find the one specific course and return it
 		return course;

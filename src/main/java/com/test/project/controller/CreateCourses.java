@@ -82,7 +82,9 @@ public class CreateCourses {
         t.commit();
         System.out.println("successfully saved courses");   
         factory.close();  
-        session.close();    
+        session.close(); 
+        
+        
 	}
 }
 

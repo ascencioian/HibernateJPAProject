@@ -37,12 +37,12 @@ public class StudentService implements StudentDao {
           
 		
         //testing
-        /*  Iterator<Student> itr = students.iterator(); 
-         *  for (Student u : students) {
+          Iterator<Student> itr = students.iterator(); 
+           for (Student u : students) {
 	    	 System.out.println("Email: " +u.getsEmail() + "|" + " Full name:" + u.getsName() +"|"+ "password: " + u.getsPass() +"|");
 	      } 
          
-         * */
+        
 
 	   factory.close();  
 	   session.close();  
@@ -63,13 +63,13 @@ public class StudentService implements StudentDao {
         Student student = (Student) session.get(Student.class,new String(studentEmail));
         
         //testing
-        /*
+        
         System.out.println("*** Employee Details ***");
         System.out.println("email   : "+student.getsEmail());
         System.out.println("Name : "+student.getsName());
         System.out.println("pass  : "+student.getsPass());
         
-         * */
+       
         
 		//using namedQuery and getSingleResult, have to handle the NonUniqueResultException 
        /*
@@ -133,6 +133,12 @@ public class StudentService implements StudentDao {
 	public void registerStudentToCourse(String studentEmail, int courseId) {
 		// TODO Auto-generated method stub
 		
+		
+		//testing
+		System.out.println("***StudentEmail+ID***");
+		System.out.println(studentEmail);
+		System.out.println(courseId);
+		
 		//check if student is registered to a course
 		SessionFactory factory = new Configuration().configure().buildSessionFactory();
 		Session session = factory.openSession();
@@ -143,13 +149,14 @@ public class StudentService implements StudentDao {
 		 List<RegisteredCourse> registeredCourses = query.getResultList();
 		 
 		 //testing
-		 /*
-		   Iterator<RegisteredCourse> itr = registeredCourses.iterator(); 
+		 
+		   Iterator<RegisteredCourse> q = registeredCourses.iterator();
+		   System.out.println("up to here");
 	          for (RegisteredCourse u : registeredCourses) {
 		    	 System.out.println("Email: " +u.getsCourses_Course_Id() + "|" + " Full name:" + u.getStudent_Student_Email() +"|");
 		      } 
 	         
-		  */
+		  
 		 
 		   Iterator<RegisteredCourse> itr = registeredCourses.iterator(); 
 	          for (RegisteredCourse u : registeredCourses) {
@@ -159,6 +166,8 @@ public class StudentService implements StudentDao {
 	        		  System.out.println("course already being taken");
 	        		  break;
 	        	  }
+	        	  
+	        	//at this point course should not be taken  
 	        	  
 	        	//Create student object using session.get()
 	              Student student = (Student) session.get(Student.class,new String(studentEmail));
@@ -188,6 +197,8 @@ public class StudentService implements StudentDao {
 	
 
 	//-----------------------------------------------------------------------------------------
+	//This method takes a Student’s Email as a parameter and would find all the courses a student is registered for.
+	//should this pull the students course attribute or reference studentCourse table
 	public List<Course> getStudentCourses(String studentEmail) {
 		// TODO Auto-generated method stub
 		SessionFactory factory = new Configuration().configure().buildSessionFactory();
@@ -198,6 +209,8 @@ public class StudentService implements StudentDao {
 		//Create Employee object using session.get()
         Student student = (Student) session.get(Student.class,new String(studentEmail));
         
+       
+        
         List <Course> studentClassList = student.getsCourses();		
         
 		//how are you going to get student courses of a student?
@@ -207,7 +220,9 @@ public class StudentService implements StudentDao {
         
         factory.close();
 	    session.close();
-        
+
+	    
+	    
 		return studentClassList;
 	}
 

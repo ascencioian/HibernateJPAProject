@@ -9,7 +9,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity
-@Table
+@Table(name ="student_course")
 @NamedQueries({
 	@NamedQuery( name="Select_All_Registered_Courses", query="from RegisteredCourse"),
 	@NamedQuery( name="Select_Registered_Courses_by_Student", query="Select c from RegisteredCourse c where c.Student_Student_Email = :email"),

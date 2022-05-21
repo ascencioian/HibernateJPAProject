@@ -81,11 +81,11 @@ public class SMSRunner {
 		String password = sin.next();
 
 		Student student = studentService.getStudentByEmail(email);
-		System.out.println(student.getsName());
+		System.out.println(student.getsName()); //test
 		if (student != null) {
 			currentStudent = student;
 		}
-
+		//here we reference the relationship table and that session is closed
 		if (currentStudent != null & currentStudent.getsPass().equals(password)) {
 			List<Course> courses = studentService.getStudentCourses(email);
 			out.println("MyClasses");
@@ -113,10 +113,10 @@ public class SMSRunner {
 			List<Course> allCourses = courseService.getAllCourses();
 			List<Course> studentCourses = studentService.getStudentCourses(currentStudent.getsEmail());
 			allCourses.removeAll(studentCourses);
-			out.printf("%5s%15S%15s\n", "ID", "Course", "Instructor");
+			//out.printf("%5s%15S%15s\n", "ID", "Course", "Instructor");
 			for (Course course : allCourses) {
-				out.println(course);
-			}
+				//out.println(course);
+				out.println("Course Id: " + course.getcId() +" | Course instructor : "+ course.getcInstructorName()+" | course name: "+ course.getcName());			}
 			out.println();
 			out.print("Enter Course Number: ");
 			int number = sin.nextInt();

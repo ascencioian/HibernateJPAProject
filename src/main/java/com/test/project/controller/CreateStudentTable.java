@@ -22,6 +22,7 @@ public class CreateStudentTable {
        System.out.println("successfully created user table");
        factory.close();
        session.close();
+       //create proxy
    }
 }
 

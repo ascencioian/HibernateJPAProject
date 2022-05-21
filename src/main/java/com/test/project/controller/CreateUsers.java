@@ -81,6 +81,10 @@ public class CreateUsers {
         System.out.println("successfully saved Users");   
         factory.close();  
         session.close();    
+       
+        
+        
+        
 	}
 }
 
