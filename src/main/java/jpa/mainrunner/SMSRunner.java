@@ -94,7 +94,7 @@ public class SMSRunner {
 				retValue = false;
 			}
 			for (Course course : courses) {
-				out.println(course);
+				out.println("Course Id: " + course.getcId() +" | Course instructor : "+ course.getcInstructorName()+" | course name: "+ course.getcName());			
 			}
 			retValue = true;
 		} else {
@@ -132,7 +132,7 @@ public class SMSRunner {
 
 				out.println("MyClasses");
 				for (Course course : sCourses) {
-					out.println(course);
+					out.println("Course Id: " + course.getcId() +" | Course instructor : "+ course.getcInstructorName()+" | course name: "+ course.getcName());
 				}
 			}
 			break;
