@@ -12,6 +12,8 @@ import java.util.Scanner;
 
 import jpa.entitymodels.Course;
 import jpa.entitymodels.Student;
+import jpa.entitymodels.RegisteredCourse;
+
 import jpa.service.CourseService;
 import jpa.service.StudentCourseService;
 import jpa.service.StudentService;
@@ -77,16 +79,20 @@ public class SMSRunner {
 		String email = sin.next();
 		out.print("Enter your password: ");
 		String password = sin.next();
-		System.out.println("this far01");
+
 		Student student = studentService.getStudentByEmail(email);
+		System.out.println(student.getsName());
 		if (student != null) {
 			currentStudent = student;
-			System.out.println("this far1");
 		}
 
-		if (currentStudent != null & currentStudent.getStudentPassword().equals(password)) {
+		if (currentStudent != null & currentStudent.getsPass().equals(password)) {
 			List<Course> courses = studentService.getStudentCourses(email);
 			out.println("MyClasses");
+			if(courses.isEmpty()) {
+				System.out.println("no registered courses");
+				retValue = false;
+			}
 			for (Course course : courses) {
 				out.println(course);
 			}
@@ -105,7 +111,7 @@ public class SMSRunner {
 		switch (sin.nextInt()) {
 		case 1:
 			List<Course> allCourses = courseService.getAllCourses();
-			List<Course> studentCourses = studentService.getStudentCourses(currentStudent.getStudentEmail());
+			List<Course> studentCourses = studentService.getStudentCourses(currentStudent.getsEmail());
 			allCourses.removeAll(studentCourses);
 			out.printf("%5s%15S%15s\n", "ID", "Course", "Instructor");
 			for (Course course : allCourses) {
@@ -114,14 +120,14 @@ public class SMSRunner {
 			out.println();
 			out.print("Enter Course Number: ");
 			int number = sin.nextInt();
-			Course newCourse = courseService.GetCourseById(number).get(0);
+			Course newCourse = courseService.GetCourseById(number);
 
 			if (newCourse != null) {
-				studentService.registerStudentToCourse(currentStudent.getStudentEmail(), newCourse);
-				Student temp = studentService.getStudentByEmail(currentStudent.getStudentEmail()).get(0);
+				studentService.registerStudentToCourse(currentStudent.getsEmail(), newCourse.getcId());
+				Student temp = studentService.getStudentByEmail(currentStudent.getsEmail());
 				
 				StudentCourseService scService = new StudentCourseService();
-				List<Course> sCourses = scService.getAllStudentCourses(temp.getStudentEmail());
+				List<Course> sCourses = scService.getAllStudentCourses(temp.getsEmail());
 				
 
 				out.println("MyClasses");

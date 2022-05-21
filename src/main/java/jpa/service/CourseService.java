@@ -36,4 +36,16 @@ public class CourseService implements CourseDao {
 		return courses;
 	}
 
+		//gets a course by Id
+	public Course GetCourseById(int courseId) {
+		// TODO Auto-generated method stub
+		SessionFactory factory = new Configuration().configure().buildSessionFactory();
+	    Session session = factory.openSession();
+	    
+	    Course course = (Course) session.get(Course.class,new Integer(courseId));
+		//get all courses
+		//find the one specific course and return it
+		return course;
+	}
+
 }
