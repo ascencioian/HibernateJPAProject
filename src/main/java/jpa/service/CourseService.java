@@ -37,7 +37,7 @@ public class CourseService implements CourseDao {
 	}
 
 		//gets a course by Id
-	public Course GetCourseById(int courseId) {
+		public Course GetCourseById(int courseId) {
 		// TODO Auto-generated method stub
 		SessionFactory factory = new Configuration().configure().buildSessionFactory();
 	    Session session = factory.openSession();
