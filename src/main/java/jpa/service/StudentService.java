@@ -165,6 +165,16 @@ public class StudentService implements StudentDao {
         //create course list
   	  	List<Course> coursesBeingTaken = student.getsCourses();
         
+  	  	//test
+  		 Iterator<Course> q = coursesBeingTaken.iterator();
+		   for (Course u : coursesBeingTaken) {
+			   System.out.println("course being taken:" + u.getcId());
+			   System.out.println("total courses:" + coursesBeingTaken.size());
+			   int id = u.getcId();
+		}
+		   
+  	  	
+  	  	
   	  	if(coursesBeingTaken.isEmpty()) {
   	  		//add to course
   	  	//create the course object  
@@ -182,8 +192,9 @@ public class StudentService implements StudentDao {
   	  	
   	  	
   	  	
-  	  	if(coursesBeingTaken.size() > 1) {
+  	  	if(coursesBeingTaken.size() >= 1) {
   	  	//compare each course in the course list
+  	  		System.out.println("stop here0");
   			 Iterator<Course> itr = coursesBeingTaken.iterator();
   		   for (Course u : coursesBeingTaken) {
   			   int id = u.getcId();
@@ -194,18 +205,18 @@ public class StudentService implements StudentDao {
   		   }
   		   
   		 if(temp == false) {
-  			System.out.println("registering course");
+
   			//create the course object  
         	  Course course = (Course) session2.get(Course.class,new Integer(courseId));
         	  
         	//insert the course object 
         	  coursesBeingTaken.add(course);
         	  
-        	 //set attribute
+        	//set attribute
         	  student.setsCourses(coursesBeingTaken);
         	  
         	 session2.merge(student);
-      	 session2.getTransaction().commit();
+        	 session2.getTransaction().commit();
    	  	 }
   		   
   	  	}

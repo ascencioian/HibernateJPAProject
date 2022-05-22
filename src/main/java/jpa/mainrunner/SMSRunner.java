@@ -123,6 +123,7 @@ public class SMSRunner {
 			Course newCourse = courseService.GetCourseById(number);
 
 			if (newCourse != null) {
+				System.out.println("this prints0");  //test
 				studentService.registerStudentToCourse(currentStudent.getsEmail(), newCourse.getcId());
 				Student temp = studentService.getStudentByEmail(currentStudent.getsEmail());
 				
