@@ -54,6 +54,38 @@ public class RegisteredCourse implements Serializable {
 		return serialVersionUID;
 	}
 	
-	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + sCourses_Course_Id;
+		result = prime * result + ((Student_Student_Email == null) ? 0 : Student_Student_Email.hashCode());
+		return result;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		RegisteredCourse other = (RegisteredCourse) obj;
+		
+		if (sCourses_Course_Id != other.sCourses_Course_Id)
+			return false;
+		if (Student_Student_Email == null) {
+			if (other.Student_Student_Email != null)
+				return false;
+		} else if (!Student_Student_Email.equals(other.Student_Student_Email))
+			return false;
+		return true;
+	}
 	
 }

@@ -133,6 +133,7 @@ public class StudentService implements StudentDao {
 	public void registerStudentToCourse(String studentEmail, int courseId) {
 		// TODO Auto-generated method stub
 		
+		boolean temp = false;
 		
 		//testing
 		System.out.println("***StudentEmail+ID***");
@@ -178,28 +179,36 @@ public class StudentService implements StudentDao {
   	  	
   	  	
   	  	
+  	  	if(coursesBeingTaken.size() > 1) {
   	  	//compare each course in the course list
-		 Iterator<Course> itr = coursesBeingTaken.iterator(); 
-         for (Course u : coursesBeingTaken) {
-       	  int id = u.getcId();
-       	   
-       	  if(id == courseId) {
-       		  System.out.println("course already being taken");
-       	  }else {
-       		 //create the course object  
-         	  Course course = (Course) session2.get(Course.class,new Integer(courseId));
-         	  
-         	//insert the course object 
-         	  coursesBeingTaken.add(course);
-         	  
-         	 //set attribute
-         	 student.setsCourses(coursesBeingTaken);
-         	 
-         	 session2.merge(student);
-         	 session2.getTransaction().commit();
-       	  }
-	 }
-	
+  			 Iterator<Course> itr = coursesBeingTaken.iterator();
+  		   for (Course u : coursesBeingTaken) {
+  			   int id = u.getcId();
+  			   if(id == courseId) {
+  				 System.out.println("course already being taken");
+  				temp = true;
+  			   }
+  		   }
+  		   
+  		 if(temp == false) {
+  			System.out.println("registering course");
+  			//create the course object  
+        	  Course course = (Course) session2.get(Course.class,new Integer(courseId));
+        	  
+        	//insert the course object 
+        	  coursesBeingTaken.add(course);
+        	  
+        	 //set attribute
+        	  student.setsCourses(coursesBeingTaken);
+        	  
+        	 session2.merge(student);
+      	 session2.getTransaction().commit();
+   	  	 }
+  		   
+  	  	}
+  	  	temp = false;
+  	  	
+  	  
          
        
 		 
