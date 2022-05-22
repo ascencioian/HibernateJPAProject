@@ -57,7 +57,7 @@ public class StudentService implements StudentDao {
 		SessionFactory factory = new Configuration().configure().buildSessionFactory();
 		Session session = factory.openSession();
 		
-		Transaction tx = session.beginTransaction();
+		
 		
 		//Create Employee object using session.get()
         Student student = (Student) session.get(Student.class,new String(studentEmail));
@@ -97,7 +97,7 @@ public class StudentService implements StudentDao {
 		SessionFactory factory = new Configuration().configure().buildSessionFactory();
 		Session session = factory.openSession();
 		
-		Transaction tx = session.beginTransaction();
+		
 		
 		//Create Employee object using session.get()
         Student student = (Student) session.get(Student.class,new String(studentEmail));
@@ -113,6 +113,9 @@ public class StudentService implements StudentDao {
         	return true;
         }else {
         	System.out.println("Wrong Credentials");
+        	
+        	factory.close();
+      	    session.close();
         }
         
 		//how are you going to validate a student?
@@ -219,7 +222,7 @@ public class StudentService implements StudentDao {
 	}
 	
 
-	//-----------------------------------------------------------------------------------------
+	//----------------------------------------gets the courses the student is registered to-------------------------------------------------
 	//This method takes a Student’s Email as a parameter and would find all the courses a student is registered for.
 	//should this pull the students course attribute or reference studentCourse table
 	public List<Course> getStudentCourses(String studentEmail) {
@@ -227,7 +230,7 @@ public class StudentService implements StudentDao {
 		SessionFactory factory = new Configuration().configure().buildSessionFactory();
 		Session session = factory.openSession();
 		
-		Transaction tx = session.beginTransaction();
+		
 		
 		//Create Employee object using session.get()
         Student student = (Student) session.get(Student.class,new String(studentEmail));
