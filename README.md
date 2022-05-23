@@ -6,10 +6,7 @@ This project is for creating a school management system where students can regis
 
 ## How It's Made:
 
-**Tech used:** HTML, CSS, JavaScript, Express, Node.js, Boostrap, Passport, Mongoose, EJS 
-Java, jUnit 5, ORM, Hibernate, MariaDB, SQL, HQL, Maven, JPA 
-
-Full CRUD functional application.
+**Tech used:** Java, jUnit 5, ORM, Hibernate, MariaDB, SQL, HQL, Maven, JPA 
 
 
 ## Optimizations
