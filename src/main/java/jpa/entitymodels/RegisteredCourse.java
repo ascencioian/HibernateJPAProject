@@ -1,6 +1,7 @@
 package jpa.entitymodels;
 
 import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -9,31 +10,30 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity
-@Table(name ="student_course")
-@NamedQueries({
-	@NamedQuery( name="Select_All_Registered_Courses", query="from RegisteredCourse"),
-	@NamedQuery( name="Select_Registered_Courses_by_Student", query="Select c from RegisteredCourse c where c.Student_Student_Email = :email"),
-})
+@Table(name = "student_course")
+@NamedQueries({ @NamedQuery(name = "Select_All_Registered_Courses", query = "from RegisteredCourse"),
+		@NamedQuery(name = "Select_Registered_Courses_by_Student", query = "Select c from RegisteredCourse c where c.Student_Student_Email = :email"), })
 public class RegisteredCourse implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
-	//class variables
+
+	// class variables
 	@Id
 	@Column(name = "Student_Student_Email", nullable = false)
 	private String Student_Student_Email;
 	@Id
 	@Column(name = "sCourses_Course_Id", nullable = false)
 	private int sCourses_Course_Id;
-	
+
 	public RegisteredCourse(String student_Student_Email, Integer sCourses_Course_Id) {
 		this.Student_Student_Email = student_Student_Email;
 		this.sCourses_Course_Id = sCourses_Course_Id;
 	}
-	
-	//default constructor
-	public RegisteredCourse() {}
 
-	//Getters Setters
+	// default constructor
+	public RegisteredCourse() {
+	}
+
+	// Getters Setters
 	public String getStudent_Student_Email() {
 		return Student_Student_Email;
 	}
@@ -53,7 +53,7 @@ public class RegisteredCourse implements Serializable {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -63,11 +63,6 @@ public class RegisteredCourse implements Serializable {
 		return result;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -77,7 +72,7 @@ public class RegisteredCourse implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		RegisteredCourse other = (RegisteredCourse) obj;
-		
+
 		if (sCourses_Course_Id != other.sCourses_Course_Id)
 			return false;
 		if (Student_Student_Email == null) {
@@ -87,5 +82,5 @@ public class RegisteredCourse implements Serializable {
 			return false;
 		return true;
 	}
-	
+
 }

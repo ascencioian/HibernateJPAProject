@@ -1,31 +1,21 @@
 package jpa.entitymodels;
 
 import java.io.Serializable;
-import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
 @Table
-@NamedQueries({
-	@NamedQuery( name="Select_All_Courses", query="from Course"),
-})
+@NamedQueries({ @NamedQuery(name = "Select_All_Courses", query = "from Course"), })
 public class Course implements Serializable {
 	private static final long serialVersionUID = 1L;
-	//Select_All_Courses
-	//class variables
+	// Select_All_Courses
+	// class variables
 	@Id
 	@Column(name = "Course_Id", nullable = false)
 	private int cId;
@@ -33,17 +23,18 @@ public class Course implements Serializable {
 	private String cName;
 	@Column(name = "Course_Instructor", nullable = false, length = 50)
 	private String cInstructorName;
-	
+
 	public Course(int cId, String cName, String cInstructorName) {
 		this.cId = cId;
 		this.cName = cName;
 		this.cInstructorName = cInstructorName;
 	}
-	
-	//default constructor
-	public Course() {}
 
-	//generate getters setters
+	// default constructor
+	public Course() {
+	}
+
+	// generate getters setters
 	public int getcId() {
 		return cId;
 	}
@@ -68,10 +59,4 @@ public class Course implements Serializable {
 		this.cInstructorName = cInstructorName;
 	}
 
-	
-	
-	
-
-
-	
 }

@@ -6,7 +6,7 @@ import jpa.entitymodels.Course;
 import jpa.entitymodels.Student;
 
 public interface StudentDao {
-	
+
 	List<Student> getAllStudents();
 
 	Student getStudentByEmail(String studentEmail);

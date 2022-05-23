@@ -1,33 +1,28 @@
 package jpa.entitymodels;
 
 import java.io.Serializable;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "student")
-@NamedQueries({
-	@NamedQuery( name="Select_All_Students", query="from Student"),
-	@NamedQuery( name="Select_Student_By_Email", query="Select c from Student c where c.sEmail = :email")
-})
-public class Student implements Serializable{
+@NamedQueries({ @NamedQuery(name = "Select_All_Students", query = "from Student"),
+		@NamedQuery(name = "Select_Student_By_Email", query = "Select c from Student c where c.sEmail = :email") })
+public class Student implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
-	//class variables
+
+	// class variables
 	@Id
 	@Column(name = "Student_Email", nullable = false, length = 50)
 	private String sEmail;
@@ -35,11 +30,10 @@ public class Student implements Serializable{
 	private String sName;
 	@Column(name = "student_password", nullable = false, length = 50)
 	private String sPass;
-	
-	//relationship
-	@ManyToMany(targetEntity=Course.class, cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
-	private List<Course> sCourses = new ArrayList<Course>();
 
+	// relationship
+	@ManyToMany(targetEntity = Course.class, cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
+	private List<Course> sCourses = new ArrayList<Course>();
 
 	public Student(String sEmail, String sName, String sPass, List<Course> sCourses) {
 		this.sEmail = sEmail;
@@ -48,10 +42,11 @@ public class Student implements Serializable{
 		this.sCourses = sCourses;
 	}
 
-	//default constructor
-	public Student(){}
+	// default constructor
+	public Student() {
+	}
 
-	//getters setters
+	// getters setters
 	public String getsEmail() {
 		return sEmail;
 	}
@@ -87,9 +82,5 @@ public class Student implements Serializable{
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-	
-	
-
-
 
 }
